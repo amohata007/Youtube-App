@@ -13,3 +13,5 @@
 - Created Comment Section through fetch API
 - Created Video Card and Container
 - created Watch Page
+- Implemented Debouncing For Suggestion Query
+- fixed CORS issue

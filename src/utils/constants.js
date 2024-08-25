@@ -21,3 +21,9 @@ export function numFormatter(num) {
     return num; // if value < 1000, nothing to do
   }
 }
+
+const CORS_REMOVER = "https://thingproxy.freeboard.io/fetch/";
+
+export const SEARCH_YOUTUBE_SUGGESTION =
+  CORS_REMOVER +
+  "http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=";

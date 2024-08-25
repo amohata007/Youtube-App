@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
+import { SEARCH_YOUTUBE_SUGGESTION } from "../utils/constants";
 
 const Head = () => {
   const dispatch = useDispatch();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestion, setSuggestion] = useState([]);
+  const [showSuggestion, setShowSuggestion] = useState(false);
+  //Debouncing
+  useEffect(() => {
+    //make api call after 200 ms
+    // if key stroke diff is less than 200 ms then decline API call
+    const timer = setTimeout(() => {
+      getSearchSuggestion();
+    }, 200);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchQuery]);
+
+  const getSearchSuggestion = async () => {
+    const data = await fetch(SEARCH_YOUTUBE_SUGGESTION + searchQuery);
+    const json = await data.json();
+    setSuggestion(json[1]);
+    console.log(json);
+  };
+
   const handleToggle = () => {
     dispatch(toggleMenu());
   };
@@ -23,14 +47,31 @@ const Head = () => {
         ></img>
       </div>
       <div className="col-span-10 px-40 py-1">
-        <input
-          type="text"
-          className="w-2/3 border border-gray-600 py-1 rounded-l-full "
-          placeholder="Search Here.."
-        ></input>
-        <button className="rounded-r-full p-1 border border-gray-600 px-3 bg-gray-100">
-          🔍
-        </button>
+        <div>
+          <input
+            type="text"
+            className=" placeholder:text-gray-500 pl-[20px] w-2/3 border border-gray-600 py-1 rounded-l-full"
+            placeholder="Search Here.."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => setShowSuggestion(true)}
+            onBlur={() => setShowSuggestion(false)}
+          ></input>
+          <button className="rounded-r-full p-1 border border-gray-600 px-3 bg-gray-100">
+            🔍
+          </button>
+        </div>
+        {showSuggestion && (
+          <div className="absolute opacity-90 bg-white w-[34rem] py-2 px-5 m-2 shadow-lg rounded-lg border border-gray-100">
+            <ul>
+              {suggestion.map((s) => (
+                <li map={s} className="p-1 shadow-sm hover:bg-gray-100">
+                  🔎 {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
       <div>
         <img
