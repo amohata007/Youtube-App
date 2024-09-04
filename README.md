@@ -16,4 +16,3 @@
 - Implemented Debouncing For Suggestion Query
 - fixed CORS issue
 - Debouncing
-- Revised
