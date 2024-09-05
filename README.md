@@ -16,3 +16,4 @@
 - Implemented Debouncing For Suggestion Query
 - fixed CORS issue
 - Debouncing
+- Throttle
