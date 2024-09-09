@@ -15,4 +15,5 @@
 - created Watch Page
 - Implemented Debouncing For Suggestion Query
 - fixed CORS issue
-- Revised Concepts
+- Debouncing
+- Revised
